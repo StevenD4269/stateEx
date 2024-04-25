@@ -7,31 +7,40 @@ function App() {
   // State variables
   const [inputText, setInputText] = useState("");
   const [todoList, setTodoList] = useState(["Ready", "Set", "GO"]);
-
+  function handleSubmit(event) {
+    event.preventDefault();
+    //update the list of items in our todoList
+    setTodoList([...todoList, inputText]);
+  }
   return (
     <div>
       {/* 1. Add an h1 with a simple title */}
       <h1>Todo List</h1>
 
       {/* 2. Create a form with a text input and a button */}
-      <form>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="todoInput"> Enter Task</label>
         <input
           type="text"
+          name="todoInput"
+          id="todoInput"
           value={inputText}
           onChange={(event) => setInputText(event.target.value)}
-          onSubmit={(eventVar) => event.preventDefault()
-        >
-        <button type="submit">Add</button> </form>
+        ></input>
+        <button type="submit">Add</button>{" "}
+      </form>
 
       {/* 3. Create an empty unordered list and 4. Render the list */}
       <ul>
         {Array.isArray(todoList) && //was getting error .map is not a function
-          todoList.map((item, index) => (
-            // 5. Inside the map callback function, return a <li> element
-            <li key={index}>{item}</li>
+          todoList.map(
+            (item, index) => {
+              // 5. Inside the map callback function, return a <li> element
+              return <li key={index}>{item}</li>;
+            }
             // 6. Give the <li> element a key prop with a unique identifier
             // {item} represents the current todo item being iterated over in the map() function}
-          ))}
+          )}
       </ul>
     </div>
   );
